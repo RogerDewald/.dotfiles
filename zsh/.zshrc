@@ -100,13 +100,18 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+#Universal Aliases
 alias home="cd ~"
 alias config="cd ~/.config/nvim/lua/daniel/"
 alias nivm="nvim"
+alias cpuinfo="cat /proc/cpuinfo"
+
+#Laptop Aliases
 alias sleep="systemctl suspend"
 alias suspend="systemctl suspend"
 alias shutdown="shutdown -h now"
 alias restart="reboot"
 alias battery="upower -i $(upower -e | grep 'BAT') | grep -E 'state|to\ full|percentage'"
-alias cpuinfo="cat /proc/cpuinfo"
 alias volume="alsamixer"
+alias wifi="nmtui"
+alias settings="gnome-control-center"
