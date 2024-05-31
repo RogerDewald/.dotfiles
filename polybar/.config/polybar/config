@@ -203,6 +203,7 @@ interval = 3
 format-connected = <label-connected>
 format-disconnected = <label-disconnected>
 label-disconnected = %{F#F0C674}%ifname%%{F#707880} disconnected
+label-disconnected-foreground = ${colors.red}
 
 [module/wlan]
 inherit = network-base
@@ -224,10 +225,9 @@ ramp-signal-5 = 󰇴
 ramp-signal-foreground = ${colors.primary}
 ramp-signal-0-foreground = ${colors.red}
 
-format-connected-alt = %downspeed:9%
-
 [module/eth]
 inherit = network-base
+inferface = enx207bd52c2f1c
 interface-type = wired
 label-connected = %{F#F0C674}%ifname%%{F-} %local_ip%
 
