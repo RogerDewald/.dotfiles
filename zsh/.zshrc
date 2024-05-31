@@ -115,3 +115,4 @@ alias battery="upower -i $(upower -e | grep 'BAT') | grep -E 'state|to\ full|per
 alias volume="alsamixer"
 alias wifi="nmtui"
 alias settings="gnome-control-center"
+alias bluetooth="blueman-manager"
