@@ -105,19 +105,20 @@ alias home="cd ~"
 alias config="cd ~/.config/nvim/lua/daniel/"
 alias nivm="nvim"
 alias cpuinfo="cat /proc/cpuinfo"
-
-#Laptop Aliases
-alias sleep="systemctl suspend"
 alias suspend="systemctl suspend"
 alias shutdown="shutdown -h now"
+alias sleep="systemctl suspend"
 alias restart="reboot"
-alias battery="upower -i $(upower -e | grep 'BAT') | grep -E 'state|to\ full|percentage'"
 alias volume="alsamixer"
 alias wifi="nmtui"
-alias settings="gnome-control-center"
 alias bluetooth="blueman-manager"
-
 alias vm="virt-manager"
+alias bios="systemctl reboot --firmware-setup"
+
+#Laptop Aliases
+#alias battery="upower -i $(upower -e | grep 'BAT') | grep -E 'state|to\ full|percentage'"
+alias settings="gnome-control-center"
+
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
