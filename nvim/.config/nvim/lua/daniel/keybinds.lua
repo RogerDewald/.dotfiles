@@ -14,6 +14,9 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>fd", vim.lsp.buf.format)
 
+--My own keybinds to use special keybinds
+vim.keymap.set("n", "<C-q>", "")
+
 --My own keybinds for terminal and running code
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
 
@@ -45,6 +48,14 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.opt.splitright = true
     vim.api.nvim_command('vsplit')
     vim.api.nvim_command('terminal npm run dev')
+    vim.api.nvim_command("vertical resize -30")
+    vim.api.nvim_command("startinsert")
+end)
+
+vim.keymap.set("n", "<leader>rj", function()
+    vim.opt.splitright = true
+    vim.api.nvim_command('vsplit')
+    vim.api.nvim_command('terminal javac %;java %:r;rm %:r.class')
     vim.api.nvim_command("vertical resize -30")
     vim.api.nvim_command("startinsert")
 end)
