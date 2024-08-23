@@ -49,6 +49,15 @@ vim.keymap.set("n", "<leader>rn", function()
     vim.api.nvim_command("startinsert")
 end)
 
+vim.keymap.set("n", "<leader>rj", function()
+    vim.opt.splitright = true
+    vim.api.nvim_command('vsplit')
+    vim.api.nvim_command('terminal javac %; java %:r; rm %:r.class')
+    vim.api.nvim_command("vertical resize -30")
+    vim.api.nvim_command("startinsert")
+end)
+
+
 
 --My own keybinds for word substitution
 vim.keymap.set("n", "<leader>s", function()
@@ -61,3 +70,6 @@ vim.keymap.set("n", "<leader>s", function()
         vim.api.nvim_feedkeys(":.,+" .. number .. " s/", "n", true)
     end
 end)
+
+--Removing some keybinds
+vim.keymap.set("n", "<C-q>", "")
