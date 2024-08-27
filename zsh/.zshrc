@@ -118,6 +118,12 @@ alias settings="gnome-control-center"
 alias bluetooth="blueman-manager"
 alias bcontrol="sudo brightnessctl set"
 
+alias bup="sudo brightnessctl set +10%"
+alias bdown="sudo brightnessctl set 10%-"
+alias blow="sudo brightnessctl set 2667"
+alias bhigh="sudo brightnessctl set 26666"
+alias bhalf="sudo brightnessctl set 13333"
+
 alias vm="virt-manager"
 alias bighousevpn="sudo openvpn --config ~/Downloads/Unsorted/Church_in_Norman_VPN_Server_ddewald_laptop.ovpn"
 
