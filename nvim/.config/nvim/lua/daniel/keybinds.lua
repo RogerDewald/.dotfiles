@@ -74,5 +74,5 @@ end)
 --Removing some keybinds
 vim.keymap.set("n", "<C-q>", "")
 
-vim.keymap.set("n", "<leader>ncmp", "<cmd>lua require('cmp').setup.buffer { enabled = false }")
-vim.keymap.set("n", "<leader>cmp", "<cmd>lua require('cmp').setup.buffer { enabled = true }")
+vim.keymap.set("n", "<leader>ncmp", "<cmd>lua require('cmp').setup.buffer { enabled = false }<CR>")
+vim.keymap.set("n", "<leader>cmp", "<cmd>lua require('cmp').setup.buffer { enabled = true }<CR>")
