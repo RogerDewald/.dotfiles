@@ -74,5 +74,6 @@ end)
 --Removing some keybinds
 vim.keymap.set("n", "<C-q>", "")
 
+--Removing autocomplete box for text files
 vim.keymap.set("n", "<leader>ncmp", "<cmd>lua require('cmp').setup.buffer { enabled = false }<CR>")
 vim.keymap.set("n", "<leader>cmp", "<cmd>lua require('cmp').setup.buffer { enabled = true }<CR>")
