@@ -32,3 +32,7 @@ export NVM_DIR="$HOME/.nvm"
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+. "$HOME/.cargo/env"
+
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
