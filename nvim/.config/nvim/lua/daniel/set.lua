@@ -25,3 +25,5 @@ vim.opt.colorcolumn = "80"
 
 --My own settings
 vim.g.have_nerd_font = true
+
+vim.opt.clipboard:append("")

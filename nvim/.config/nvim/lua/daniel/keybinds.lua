@@ -14,6 +14,9 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>fd", vim.lsp.buf.format)
 
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
 --My own keybinds to use special keybinds
 vim.keymap.set("n", "<C-q>", "")
 
