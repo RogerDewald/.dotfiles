@@ -193,8 +193,8 @@ ramp-capacity-4 = 󰁹
 ramp-capacity-foreground = ${colors.primary}
 ramp-capacity-0-foreground = ${colors.red}
 low-at = 10
-battery = BAT0
-adapter = ADP0
+battery = BAT1
+adapter = ACAD
 poll-interval = 3
 
 [network-base]
@@ -206,7 +206,7 @@ format-disconnected = <label-disconnected>
 
 [module/wlan]
 inherit = network-base
-interface = wlp0s20f3
+interface = wlp2s0
 
 interface-type = wireless
 
@@ -229,7 +229,7 @@ label-disconnected-foreground = ${colors.red}
 
 [module/eth]
 inherit = network-base
-inferface = enx207bd52c2f1c
+inferface = enp3s0
 interface-type = wired
 label-connected = 󰈀 %local_ip%
 
