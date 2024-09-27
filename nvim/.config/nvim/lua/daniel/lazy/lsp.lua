@@ -81,14 +81,13 @@ return {
             mapping = cmp.mapping.preset.insert({
                 ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
                 ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<C-y>'] = cmp.mapping.confirm({ select = true }),
+                ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
                 ['<C-q>'] = cmp.mapping.abort(),
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
                 { name = 'luasnip' }, -- For luasnip users.
                 { name = 'buffer' },
-                { name = "cmdline" },
                 { name = "path" },
             }),
             formatting = {
@@ -97,20 +96,20 @@ return {
                     menu = {
                         buffer = "[buf]",
                         nvim_lsp = "[LSP]",
+                        luasnip = "[snip]",
                         nvim_lua = "[api]",
                         path = "[path]",
-                        luasnip = "[snip]",
                     },
                 },
             },
             experimental = {
                 native_menu = false,
-                ghost_text = false,
+                ghost_text = true,
             },
         })
 
         vim.diagnostic.config({
-            -- update_in_insert = true,
+            update_in_insert = true,
             float = {
                 focusable = false,
                 style = "minimal",
