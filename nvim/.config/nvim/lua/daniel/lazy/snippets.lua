@@ -15,7 +15,7 @@ return {
             ls.filetype_extend("javascript", { "jsdoc" })
 
             --- TODO: What is expand?
-            vim.keymap.set({"i"}, "<C-Space", function() ls.expand() end, {silent = true})
+            vim.keymap.set({"i"}, "<C-Space>", function() ls.expand() end, {silent = true})
 
             vim.keymap.set({"i", "s"}, "<C-n>", function() ls.jump(1) end, {silent = true})
             vim.keymap.set({"i", "s"}, "<C-p>", function() ls.jump(-1) end, {silent = true})
