@@ -36,3 +36,7 @@ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 . "$HOME/.cargo/env"
 
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+
+export PATH="$HOME/.local/scripts:$PATH"
+
+bindkey -s ^f "~/.local/bin/scripts/tmux-sessionizer\n"
