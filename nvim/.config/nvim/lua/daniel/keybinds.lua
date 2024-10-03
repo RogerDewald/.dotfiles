@@ -79,3 +79,7 @@ vim.keymap.set("n", "<C-q>", "")
 --Removing autocomplete box for text files
 vim.keymap.set("n", "<leader>ncmp", "<cmd>lua require('cmp').setup.buffer { enabled = false }<CR>")
 vim.keymap.set("n", "<leader>cmp", "<cmd>lua require('cmp').setup.buffer { enabled = true }<CR>")
+
+-- My own take on ThePrimeagen's tmux-sessionizer, bc I couldn't get his to 
+-- work for me
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww ~/.local/bin/scripts/tmux-sessionizer<CR>")
