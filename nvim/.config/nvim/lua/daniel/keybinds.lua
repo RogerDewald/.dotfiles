@@ -14,7 +14,8 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "<leader>fd", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux new tmux-sessionizer<CR>")
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
 --My own keybinds for terminal and running code
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>')
