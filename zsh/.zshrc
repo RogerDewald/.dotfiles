@@ -55,3 +55,8 @@ export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || pr
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 bindkey -s ^f "~/.local/bin/scripts/tmux-sessionizer\n"
+
+# export PATH="/usr/local/mcuxpressoide/ide:$PATH"
+export PATH="/usr/local/mcuxpressoide/ide/plugins/com.nxp.mcuxpresso.tools.bin.linux_24.12.0.202407110909/binaries:/usr/local/mcuxpressoide/ide/plugins/com.nxp.mcuxpresso.tools.linux_24.12.0.202407110909/tools/bin:/usr/local/mcuxpressoide/ide:/home/daniel/.local/bin:/usr/local/mcuxpressoide/ide:$PATH"
+
+alias mcu="mcuxpressoide"
