@@ -11,7 +11,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
-CASE_SENSITIVE="true"
+CASE_SENSITIVE="false"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -60,3 +60,5 @@ bindkey -s ^f "~/.local/bin/scripts/tmux-sessionizer\n"
 export PATH="/usr/local/mcuxpressoide/ide/plugins/com.nxp.mcuxpresso.tools.bin.linux_24.12.0.202407110909/binaries:/usr/local/mcuxpressoide/ide/plugins/com.nxp.mcuxpresso.tools.linux_24.12.0.202407110909/tools/bin:/usr/local/mcuxpressoide/ide:/home/daniel/.local/bin:/usr/local/mcuxpressoide/ide:$PATH"
 
 alias mcu="mcuxpressoide"
+
+unsetopt AUTO_CD
