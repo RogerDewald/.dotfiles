@@ -44,6 +44,14 @@ vim.keymap.set("n", "<leader>rp", function()
     vim.api.nvim_command("startinsert")
 end)
 
+vim.keymap.set("n", "<leader>rs", function()
+    vim.opt.splitright = true
+    vim.api.nvim_command('vsplit')
+    vim.api.nvim_command('terminal http-server .')
+    vim.api.nvim_command("vertical resize -30")
+    vim.api.nvim_command("startinsert")
+end)
+
 vim.keymap.set("n", "<leader>rn", function()
     vim.opt.splitright = true
     vim.api.nvim_command('vsplit')
