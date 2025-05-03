@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+packages=(
+    curl
+    g++
+    git
+    unzip
+    npm
+    stow
+)
+
+for package in ${packages[@]}; do
+    apt install ${package}
+done
