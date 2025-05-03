@@ -7,6 +7,8 @@ packages=(
     unzip
     npm
     stow
+    tmux
+    zsh
 )
 
 for package in ${packages[@]}; do
