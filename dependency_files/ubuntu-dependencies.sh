@@ -3,6 +3,7 @@
 packages=(
     tmux
     zsh
+    stow
 )
 
 for package in ${packages[@]}; do
