@@ -5,6 +5,7 @@
 alias windows="cd /mnt/c/Users/danie/Documents"
 alias school="cd /mnt/c/Users/danie/Documents/School/OU/junior25/"
 alias projects="cd /mnt/c/Users/danie/Documents/Personal/Projects/"
+alias darkstar="cd /mnt/c/Users/danield/Documents/Projects/Darkstar"
 
 # Go
 export GOROOT=/usr/local/go
