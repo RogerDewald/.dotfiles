@@ -1,0 +1,12 @@
+# Directories tmux-sessionizer offers, one per line.
+# Anything that does not exist on the current machine is skipped, so this
+# one list is safe to share across every machine.
+
+~/projects
+~/personal
+~
+
+# WSL — the Windows side
+/mnt/c/Users/danie/Documents
+/mnt/c/Users/danie/Documents/School/OU/junior25
+/mnt/c/Users/danie/Documents/Personal/Projects

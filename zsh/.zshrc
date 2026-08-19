@@ -1,55 +1,87 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
+# ~/.zshrc — shared across every machine.
+#
+# Machine-specific settings do NOT belong in this file. They go in
+#   ~/.config/zsh/hosts/<host>.zsh        (loaded after oh-my-zsh)
+#   ~/.config/zsh/hosts/<host>.pre.zsh    (loaded before oh-my-zsh)
+# and anything private or one-off goes in ~/.zshrc.local, which is not
+# tracked by git. See the README for how <host> is resolved.
 
-# Path to your oh-my-zsh installation.
+ZSH_CONFIG_DIR="${HOME}/.config/zsh"
+
+# ---------------------------------------------------------------------------
+# Which machine is this?
+# ---------------------------------------------------------------------------
+# Resolution order, first hit wins:
+#   1. $DOTFILES_HOST from the environment (set it in ~/.zshenv)
+#   2. the single line in ~/.config/zsh/host   (untracked, easiest option)
+#   3. "wsl", auto-detected from /proc/version
+#   4. the short hostname
+#   5. "default"
+if [[ -z "$DOTFILES_HOST" ]]; then
+    if [[ -r "${ZSH_CONFIG_DIR}/host" ]]; then
+        DOTFILES_HOST="$(<"${ZSH_CONFIG_DIR}/host")"
+    elif [[ -r /proc/version ]] && grep -qi microsoft /proc/version; then
+        DOTFILES_HOST="wsl"
+    else
+        DOTFILES_HOST="${HOST%%.*}"
+    fi
+fi
+# Fall back to default.zsh rather than silently loading nothing, so a new
+# machine with no host file still gets a sane shell.
+if [[ ! -r "${ZSH_CONFIG_DIR}/hosts/${DOTFILES_HOST}.zsh" ]]; then
+    DOTFILES_HOST="default"
+fi
+export DOTFILES_HOST
+
+# ---------------------------------------------------------------------------
+# oh-my-zsh
+# ---------------------------------------------------------------------------
+# These have to be set BEFORE oh-my-zsh.sh is sourced, which is the whole
+# reason the .pre.zsh half exists.
 export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-
-# Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
 plugins=(git)
-source $ZSH/oh-my-zsh.sh
 
-#Universal Aliases
+[[ -r "${ZSH_CONFIG_DIR}/hosts/${DOTFILES_HOST}.pre.zsh" ]] \
+    && source "${ZSH_CONFIG_DIR}/hosts/${DOTFILES_HOST}.pre.zsh"
+
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
+
+# ---------------------------------------------------------------------------
+# Aliases that make sense everywhere
+# ---------------------------------------------------------------------------
 alias config="cd ~/.config/nvim/lua/daniel/"
-alias nivm="nvim"
+alias nivm="nvim"                 # the typo I make often enough to alias
 alias cpuinfo="cat /proc/cpuinfo"
 
-#Laptop Aliases
-alias sleep="systemctl suspend"
-alias suspend="systemctl suspend"
-alias shutdown="shutdown -h now"
-alias restart="reboot"
-alias battery="upower -i $(upower -e | grep 'BAT') | grep -E 'state|to\ full|percentage'"
-alias volume="alsamixer"
-alias wifi="nmtui"
-alias settings="gnome-control-center"
-alias bluetooth="blueman-manager"
-alias bcontrol="sudo brightnessctl set"
+# ---------------------------------------------------------------------------
+# Node (nvm)
+# ---------------------------------------------------------------------------
+# Both layouts have been used on these machines, so take whichever exists.
+if [[ -n "${XDG_CONFIG_HOME:-}" && -d "${XDG_CONFIG_HOME}/nvm" ]]; then
+    export NVM_DIR="${XDG_CONFIG_HOME}/nvm"
+else
+    export NVM_DIR="$HOME/.nvm"
+fi
+[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
 
-alias bup="sudo brightnessctl set +10%"
-alias bdown="sudo brightnessctl set 10%-"
-alias blow="sudo brightnessctl set 2667"
-alias bhigh="sudo brightnessctl set 26666"
-alias bhalf="sudo brightnessctl set 13333"
+# ---------------------------------------------------------------------------
+# tmux-sessionizer (stow the `bin` package to get it)
+# ---------------------------------------------------------------------------
+# Guarded, so ^f is only bound when the script is actually installed —
+# otherwise the keybind silently runs nothing.
+[[ -x "$HOME/.local/bin/scripts/tmux-sessionizer" ]] \
+    && bindkey -s ^f "~/.local/bin/scripts/tmux-sessionizer\n"
 
-alias vm="virt-manager"
-alias bighousevpn="sudo openvpn --config ~/Downloads/Unsorted/Church_in_Norman_VPN_Server_ddewald_laptop.ovpn"
+[[ -d "$HOME/.local/bin" ]] && export PATH="$HOME/.local/bin:$PATH"
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+# ---------------------------------------------------------------------------
+# Per-machine and private config
+# ---------------------------------------------------------------------------
+[[ -r "${ZSH_CONFIG_DIR}/hosts/${DOTFILES_HOST}.zsh" ]] \
+    && source "${ZSH_CONFIG_DIR}/hosts/${DOTFILES_HOST}.zsh"
+
+# Untracked. Secrets, tokens, work-only paths, quick experiments.
+[[ -r "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"

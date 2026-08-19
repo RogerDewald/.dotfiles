@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# My own take on ThePrimeagen's tmux-sessionizer.
+#
+# fzf over a list of project directories, then attach to (or create) a tmux
+# session named after the one picked. Bound to ^f in .zshrc and to <C-f> in
+# the neovim config (RogerDewald/.nvimfiles).
+#
+# The directories to search come from, in order:
+#   1. a path given as $1 (skips fzf entirely)
+#   2. ~/.config/tmux-sessionizer/paths — one path per line, # for comments
+#   3. the built-in fallback below
+# Paths that do not exist on this machine are skipped silently, which is why
+# one shared list can cover both a Linux laptop and WSL.
+
+set -o pipefail
+
+CONFIG="${TMUX_SESSIONIZER_PATHS:-$HOME/.config/tmux-sessionizer/paths}"
+FALLBACK=("$HOME/projects" "$HOME/personal" "$HOME")
+
+if [[ $# -eq 1 ]]; then
+    selected="$1"
+else
+    search_paths=()
+
+    if [[ -r "$CONFIG" ]]; then
+        while IFS= read -r line || [[ -n "$line" ]]; do
+            line="${line%%#*}"                        # strip comments
+            line="$(echo "$line" | xargs 2>/dev/null)" # trim whitespace
+            [[ -z "$line" ]] && continue
+            line="${line/#\~/$HOME}"                  # expand a leading ~
+            [[ -d "$line" ]] && search_paths+=("$line")
+        done < "$CONFIG"
+    fi
+
+    if [[ ${#search_paths[@]} -eq 0 ]]; then
+        for p in "${FALLBACK[@]}"; do
+            [[ -d "$p" ]] && search_paths+=("$p")
+        done
+    fi
+
+    if [[ ${#search_paths[@]} -eq 0 ]]; then
+        echo "tmux-sessionizer: no searchable directories (checked $CONFIG)" >&2
+        exit 1
+    fi
+
+    selected=$(find "${search_paths[@]}" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+selected_name=$(basename "$selected" | tr . _)
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s "$selected_name" -c "$selected"
+    exit 0
+fi
+
+if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+if [[ -z $TMUX ]]; then
+    tmux attach-session -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi

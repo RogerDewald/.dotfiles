@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Start polybar with this machine's battery and adapter filled in.
+#
+# These are the only two things in the polybar config that genuinely differ
+# per machine (BAT0/ADP0 on one laptop, BAT1/ACAD on another), and they used
+# to be the reason for a separate git branch per machine. Detect them from
+# sysfs instead. Network interfaces need no detection — polybar picks those
+# itself from `interface-type`.
+
+bar="${1:-toph}"
+
+pick_supply() {
+    local type="$1" supply
+    for supply in /sys/class/power_supply/*; do
+        [[ -r "$supply/type" ]] || continue
+        if [[ "$(<"$supply/type")" == "$type" ]]; then
+            basename "$supply"
+            return 0
+        fi
+    done
+    return 1
+}
+
+export POLYBAR_BATTERY="$(pick_supply Battery)"
+export POLYBAR_ADAPTER="$(pick_supply Mains)"
+
+killall -q polybar
+while pgrep -x polybar >/dev/null; do sleep 0.1; done
+
+polybar "$bar" >>"${XDG_CACHE_HOME:-$HOME/.cache}/polybar-${bar}.log" 2>&1 &

@@ -1,1 +1,10 @@
 temp.txt
+
+# Editor leftovers
+*.swp
+*.swo
+*~
+
+# Untracked per-machine config (see README: "Per-machine differences")
+zsh/.config/zsh/host
+zsh/.zshrc.local

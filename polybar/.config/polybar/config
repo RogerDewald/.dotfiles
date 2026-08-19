@@ -193,8 +193,10 @@ ramp-capacity-4 = 󰁹
 ramp-capacity-foreground = ${colors.primary}
 ramp-capacity-0-foreground = ${colors.red}
 low-at = 10
-battery = BAT0
-adapter = ADP0
+; Detected at launch by ~/.local/bin/scripts/polybar-launch, so one config
+; covers every machine (BAT0/ADP0 here, BAT1/ACAD on the Asus).
+battery = ${env:POLYBAR_BATTERY:BAT0}
+adapter = ${env:POLYBAR_ADAPTER:ADP0}
 poll-interval = 3
 
 [network-base]
@@ -206,7 +208,6 @@ format-disconnected = <label-disconnected>
 
 [module/wlan]
 inherit = network-base
-interface = wlp0s20f3
 
 interface-type = wireless
 
@@ -229,7 +230,6 @@ label-disconnected-foreground = ${colors.red}
 
 [module/eth]
 inherit = network-base
-inferface = enx207bd52c2f1c
 interface-type = wired
 label-connected = 󰈀 %local_ip%
 

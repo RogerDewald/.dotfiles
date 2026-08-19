@@ -1,0 +1,5 @@
+# Everything in here is consumed by Linux shells, editors and window
+# managers. Never let a Windows checkout rewrite it to CRLF: a .sh with
+# CRLF fails inside a container/WSL with a confusing "bad interpreter".
+* text=auto eol=lf
+*.png binary
