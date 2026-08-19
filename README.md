@@ -142,9 +142,9 @@ cd ~/.nvimfiles && stow --target="$HOME" nvim
 This repo used to keep one branch per machine — `main`, `laptop`, `wsl`,
 `AsusLaptop`. Each branch carried its own copy of the same i3, polybar, picom
 and zsh files, so a fix on one machine never reached the others: the same
-snippets and treesitter fixes were committed twice on two branches, `main` sat
-20+ commits behind, and merging any branch into another was a guaranteed
-conflict.
+snippets and treesitter fixes were committed twice, once on `laptop` and once
+on `wsl`; `main` sat 17 commits behind `laptop` and 28 behind `wsl`; and
+merging any branch into another was a guaranteed conflict.
 
 **There is now one branch: `main`.** Machine differences are handled by three
 mechanisms instead, all of them additive.
