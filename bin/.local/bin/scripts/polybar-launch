@@ -9,6 +9,9 @@
 
 bar="${1:-toph}"
 
+# First matching supply in sorted glob order. Laptops have exactly one
+# Mains (ADP0 here, ACAD on the Asus); if a machine ever had two, this
+# picks the alphabetically first, which is at least deterministic.
 pick_supply() {
     local type="$1" supply
     for supply in /sys/class/power_supply/*; do
@@ -21,10 +24,21 @@ pick_supply() {
     return 1
 }
 
-export POLYBAR_BATTERY="$(pick_supply Battery)"
-export POLYBAR_ADAPTER="$(pick_supply Mains)"
+# Export only on a hit. An exported-but-empty var is NOT the same as unset:
+# polybar would use the empty string instead of the ${env:...:BAT0} fallback.
+if battery="$(pick_supply Battery)"; then
+    export POLYBAR_BATTERY="$battery"
+fi
+if adapter="$(pick_supply Mains)"; then
+    export POLYBAR_ADAPTER="$adapter"
+fi
 
 killall -q polybar
 while pgrep -x polybar >/dev/null; do sleep 0.1; done
 
-polybar "$bar" >>"${XDG_CACHE_HOME:-$HOME/.cache}/polybar-${bar}.log" 2>&1 &
+# The log dir is not guaranteed to exist on a fresh install, and the
+# redirect below is what starts polybar — if it fails, no bar.
+log_dir="${XDG_CACHE_HOME:-$HOME/.cache}"
+mkdir -p "$log_dir" || log_dir=/tmp
+
+polybar "$bar" >>"$log_dir/polybar-${bar}.log" 2>&1 &
